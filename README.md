@@ -1,2 +1,2 @@
 # API_Flutter_Training
-Learning API in flutter 
+Learning API data fetching in flutter 
