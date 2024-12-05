@@ -2,7 +2,6 @@ import 'package:api_app/app/data/model/emoji_response/emoji_response.dart';
 import 'package:api_app/app/data/model/result.dart';
 import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
 import 'package:api_app/app/data/service/riddle_service.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
