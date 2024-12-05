@@ -3,6 +3,7 @@ class HttpConfig {
   static String baseUrl = "https://api.api-ninjas.com"; // live
   static String apiKey = ' 1wDtvZuDeIn+MyJkLZp12g==zU8rGfoGQv54ePeW';
 
-  //end points 
+  //end points
   static String getRiddles = "/v1/riddles";
+  static String getEmoji = "/v1/emoji";
 }

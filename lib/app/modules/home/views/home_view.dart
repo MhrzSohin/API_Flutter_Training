@@ -18,8 +18,9 @@ class HomeView extends GetView<HomeController> {
           children: [
             Obx(
               () => Text(
-                controller.riddlResults.value.data?.title.toString() ?? 'wait',
-                style: TextStyle(fontSize: 20),
+                controller.riddlResults.value.data?.question.toString() ??
+                    'wait',
+                style: const TextStyle(fontSize: 20),
               ),
             ),
             ElevatedButton(
@@ -28,7 +29,21 @@ class HomeView extends GetView<HomeController> {
 
                   controller.fetchData();
                 },
-                child: Text('Fetch data'))
+                child: const Text('Fetch data')),
+            Obx(
+              () => Text(
+                controller.emojiResult.value.data?.firstOrNull?.character ??
+                    'waiting..',
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  controller.title.value = 'Emoji Loading';
+
+                  controller.fetchEmoji();
+                },
+                child: const Text('Fetch data')),
           ],
         ),
       ),

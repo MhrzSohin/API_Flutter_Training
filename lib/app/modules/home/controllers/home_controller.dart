@@ -1,3 +1,4 @@
+import 'package:api_app/app/data/model/emoji_response/emoji_response.dart';
 import 'package:api_app/app/data/model/result.dart';
 import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
 import 'package:api_app/app/data/service/riddle_service.dart';
@@ -10,21 +11,6 @@ class HomeController extends GetxController {
   final count = 0.obs;
 
   var title = 'Home'.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   var riddlResults = APIResult<RiddleResponse>().obs;
   // final dio = Dio();
@@ -51,5 +37,22 @@ class HomeController extends GetxController {
     //   ),
     // );
     // title.value = response.data[0]['question'];
+  }
+
+  var emojiResult = APIResult<List<Emoji?>>().obs;
+  void fetchEmoji() async {
+    emojiResult.value = APIResult.loading();
+
+    var response = await RiddleService.getEmoji(name: 'angry');
+    if (response.isNotEmpty) {
+      emojiResult.value = APIResult.success(response);
+    } else {
+      emojiResult.value = APIResult.error("Something went wrong.");
+    }
+    if (emojiResult.value.isSuccessful) {
+      Get.snackbar("Success", "Data fetched successfully.");
+    } else {
+      Get.snackbar("error", "Something went wrong ERROR");
+    }
   }
 }
