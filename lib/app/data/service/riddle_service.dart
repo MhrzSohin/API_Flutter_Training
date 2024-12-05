@@ -8,8 +8,6 @@ class RiddleService {
     try {
       var res = await Api().get(
         HttpConfig.getRiddles,
-        addAuthInterceptor: true, //no need for this project
-        addRequestInterceptor: true, //no need for this project
       );
       var response =
           RiddleResponse.fromMap(res.data[0] as Map<String, dynamic>);

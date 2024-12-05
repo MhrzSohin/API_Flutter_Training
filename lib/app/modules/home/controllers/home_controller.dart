@@ -2,6 +2,7 @@ import 'package:api_app/app/data/model/emoji_response/emoji_response.dart';
 import 'package:api_app/app/data/model/result.dart';
 import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
 import 'package:api_app/app/data/service/riddle_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -10,6 +11,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
 
   var title = 'Home'.obs;
+  var emoji = TextEditingController();
 
   var riddlResults = APIResult<RiddleResponse>().obs;
   // final dio = Dio();

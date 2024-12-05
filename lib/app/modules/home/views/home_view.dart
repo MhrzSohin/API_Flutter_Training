@@ -14,37 +14,55 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          children: [
-            Obx(
-              () => Text(
-                controller.riddlResults.value.data?.question.toString() ??
-                    'wait',
-                style: const TextStyle(fontSize: 20),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(
+                () => Text(
+                  controller.riddlResults.value.data?.question.toString() ??
+                      'wait',
+                  style: const TextStyle(fontSize: 20),
+                ),
               ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  controller.title.value = 'abc value';
+              ElevatedButton(
+                  onPressed: () {
+                    controller.title.value = 'abc value';
 
-                  controller.fetchData();
-                },
-                child: const Text('Fetch data')),
-            Obx(
-              () => Text(
-                controller.emojiResult.value.data?.firstOrNull?.character ??
-                    'waiting..',
-                style: const TextStyle(fontSize: 20),
+                    controller.fetchData();
+                  },
+                  child: const Text('Fetch data')),
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  controller.title.value = 'Emoji Loading';
-
-                  controller.fetchEmoji();
-                },
-                child: const Text('Fetch data')),
-          ],
+              TextFormField(
+                controller: controller.emoji,
+                decoration: InputDecoration(
+                  hintText: "Enter the emoji",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4)),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    if (controller.emoji.text == 'angry') {
+                      controller.fetchEmoji();
+                    }
+                  },
+                  child: Text("Show Emoji")),
+              Obx(
+                () => Text(
+                  controller.emojiResult.value.data?.firstOrNull?.character ??
+                      'waiting..',
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
