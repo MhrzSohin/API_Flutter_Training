@@ -44,6 +44,11 @@ class HomeView extends GetView<HomeController> {
                   controller.fetchEmoji();
                 },
                 child: const Text('Fetch data')),
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: "Enter emoji",
+              ),
+            ),
           ],
         ),
       ),
