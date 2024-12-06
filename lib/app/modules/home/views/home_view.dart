@@ -21,18 +21,36 @@ class HomeView extends GetView<HomeController> {
             children: [
               Obx(
                 () => Text(
-                  controller.riddlResults.value.data?.question.toString() ??
-                      'wait',
+                  controller.title.value,
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    controller.title.value = 'abc value';
-
-                    controller.fetchData();
-                  },
-                  child: const Text('Fetch data')),
+              Obx(
+                () => Visibility(
+                  visible: controller.isAnswerVisible.value,
+                  child: Text(
+                    controller.riddlResults.value.data?.answer ?? '',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        controller.title.value;
+                        controller.isAnswerVisible.value = false;
+                        controller.fetchData();
+                      },
+                      child: const Text('Fetch data')),
+                  ElevatedButton(
+                      onPressed: () {
+                        controller.isAnswerVisible.value =
+                            !controller.isAnswerVisible.value;
+                      },
+                      child: Text("Show Answer")),
+                ],
+              ),
               const SizedBox(
                 height: 50,
               ),
@@ -49,9 +67,7 @@ class HomeView extends GetView<HomeController> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    if (controller.emoji.text == 'angry') {
-                      controller.fetchEmoji();
-                    }
+                    controller.fetchEmoji();
                   },
                   child: Text("Show Emoji")),
               Obx(

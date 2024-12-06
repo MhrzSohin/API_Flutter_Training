@@ -4,6 +4,7 @@ import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
 import 'package:api_app/app/data/service/riddle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -12,6 +13,15 @@ class HomeController extends GetxController {
 
   var title = 'Home'.obs;
   var emoji = TextEditingController();
+  var dataBox = GetStorage();
+  var isAnswerVisible = false.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    title.value = dataBox.read('riddle') ?? 'no data';
+  }
 
   var riddlResults = APIResult<RiddleResponse>().obs;
   // final dio = Dio();
@@ -26,6 +36,8 @@ class HomeController extends GetxController {
       riddlResults.value = APIResult.error("Something went wrong.");
     }
     if (riddlResults.value.isSuccessful) {
+      title.value = riddlResults.value.data?.question ?? 'no data';
+      dataBox.write('riddle', riddlResults.value.data?.question);
       Get.snackbar("Success", "Data fetched successfully.");
     } else {
       Get.snackbar("error", "Something went wrong ERROR");
@@ -44,7 +56,7 @@ class HomeController extends GetxController {
   void fetchEmoji() async {
     emojiResult.value = APIResult.loading();
 
-    var response = await RiddleService.getEmoji(name: 'angry');
+    var response = await RiddleService.getEmoji(name: emoji.text);
     if (response.isNotEmpty) {
       emojiResult.value = APIResult.success(response);
     } else {
