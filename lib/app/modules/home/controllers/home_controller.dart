@@ -13,6 +13,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
 
   var title = 'Home'.obs;
+  var stockdata = "stock list".obs;
   var emoji = TextEditingController();
   var stock = TextEditingController();
   var dataBox = GetStorage();
@@ -71,17 +72,18 @@ class HomeController extends GetxController {
     }
   }
 
-  var stockResult = APIResult<List<StockReponse?>>().obs;
+  var stockResult = APIResult<StockReponse>().obs;
   void fetchStock() async {
     stockResult.value = APIResult.loading();
 
-    var response = await RiddleService.getStock(name: stock.name);
-    if (response.isNotEmpty) {
-      emojiResult.value = APIResult.success(response);
+    var response = await RiddleService.getStock();
+    if (response != null) {
+      stockResult.value = APIResult.success(response);
     } else {
-      emojiResult.value = APIResult.error("Something went wrong.");
+      stockResult.value = APIResult.error("Something went wrong.");
     }
-    if (emojiResult.value.isSuccessful) {
+    if (stockResult.value.isSuccessful) {
+      stockdata.value = stockResult.value.data?.name ?? 'no data';
       Get.snackbar("Success", "Data fetched successfully.");
     } else {
       Get.snackbar("error", "Something went wrong ERROR");

@@ -82,26 +82,29 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(
                   height: 50,
                 ),
-                TextFormField(
-                  controller: controller.stock,
-                  decoration: InputDecoration(
-                    hintText: "Enter the stock",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      controller.fetchStock();
-                    },
-                    child: Text("Show Stock")),
+                // TextFormField(
+                //   controller: controller.stock,
+                //   decoration: InputDecoration(
+                //     hintText: "Enter the stock",
+                //     border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(4)),
+                //   ),
+                // ),
                 Obx(
-                  () => Image.network(
-                    controller.stockResult.value.data?.ticker ?? "",
+                  () => Text(
+                    controller.stockdata.value,
+                    style: const TextStyle(fontSize: 20),
                   ),
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          controller.stockdata.value;
+                          controller.fetchStock();
+                        },
+                        child: const Text('Fetch stock')),
+                  ],
                 ),
               ],
             ),
