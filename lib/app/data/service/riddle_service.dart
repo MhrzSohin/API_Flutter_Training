@@ -2,6 +2,7 @@ import 'package:api_app/app/core/config/api.dart';
 import 'package:api_app/app/core/config/http_config.dart';
 import 'package:api_app/app/data/model/emoji_response/emoji_response.dart';
 import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
+import 'package:api_app/app/data/model/stock_reponse.dart';
 
 class RiddleService {
   static Future<RiddleResponse?> getRiddles() async {
@@ -25,8 +26,25 @@ class RiddleService {
           addRequestInterceptor: true,
           queryParameters: {
             'name': name,
-          } //no need for this project
-          );
+          });
+      return (res.data as List<dynamic>?)
+              ?.map((data) => Emoji.fromMap(data))
+              .toList() ??
+          [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  static Future<List<StockReponse?>> get({
+    required String name,
+  }) async {
+    try {
+      var res = await Api().get(HttpConfig.getEmoji,
+          addRequestInterceptor: true,
+          queryParameters: {
+            'name': name,
+          });
       return (res.data as List<dynamic>?)
               ?.map((data) => Emoji.fromMap(data))
               .toList() ??

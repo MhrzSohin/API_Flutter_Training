@@ -1,6 +1,7 @@
 import 'package:api_app/app/data/model/emoji_response/emoji_response.dart';
 import 'package:api_app/app/data/model/result.dart';
 import 'package:api_app/app/data/model/riddle_response/riddle_response.dart';
+import 'package:api_app/app/data/model/stock_reponse.dart';
 import 'package:api_app/app/data/service/riddle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class HomeController extends GetxController {
 
   var title = 'Home'.obs;
   var emoji = TextEditingController();
+  var stock = TextEditingController();
   var dataBox = GetStorage();
   var isAnswerVisible = false.obs;
 
@@ -57,6 +59,23 @@ class HomeController extends GetxController {
     emojiResult.value = APIResult.loading();
 
     var response = await RiddleService.getEmoji(name: emoji.text);
+    if (response.isNotEmpty) {
+      emojiResult.value = APIResult.success(response);
+    } else {
+      emojiResult.value = APIResult.error("Something went wrong.");
+    }
+    if (emojiResult.value.isSuccessful) {
+      Get.snackbar("Success", "Data fetched successfully.");
+    } else {
+      Get.snackbar("error", "Something went wrong ERROR");
+    }
+  }
+
+  var stockResult = APIResult<List<StockReponse?>>().obs;
+  void fetchStock() async {
+    stockResult.value = APIResult.loading();
+
+    var response = await RiddleService.getStock(name: stock.name);
     if (response.isNotEmpty) {
       emojiResult.value = APIResult.success(response);
     } else {
