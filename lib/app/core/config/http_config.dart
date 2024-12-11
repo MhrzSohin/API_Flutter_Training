@@ -8,4 +8,5 @@ class HttpConfig {
   static String getEmoji = "/v1/emoji";
   static String getStock = "/v1/stockprice?ticker=AAPL";
   static String getCelebrity = "/v1/celebrity";
+  static String movies = "/v1/movies";
 }

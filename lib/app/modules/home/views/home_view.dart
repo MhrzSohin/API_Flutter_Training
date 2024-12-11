@@ -106,6 +106,21 @@ class HomeView extends GetView<HomeController> {
                         child: const Text('Fetch stock')),
                   ],
                 ),
+                Obx(
+                  () => ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var item =
+                            controller.movieResult.value.data?.data?[index];
+                        return Image.network(item?.images?.firstOrNull ?? '');
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 5,
+                          ),
+                      itemCount:
+                          controller.movieResult.value.data?.data?.length ?? 0),
+                ),
               ],
             ),
           ),
